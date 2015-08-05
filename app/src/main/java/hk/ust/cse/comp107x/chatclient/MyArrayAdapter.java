@@ -1,0 +1,61 @@
+package hk.ust.cse.comp107x.chatclient;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+/**
+ * Created by muppala on 4/5/15.
+ */
+public class MyArrayAdapter extends ArrayAdapter<Message> {
+    private final Context context;
+    private final ArrayList<Message> messages;
+
+    public MyArrayAdapter(Context context, ArrayList<Message> messages) {
+        super(context, R.layout.message, messages);
+        this.context = context;
+        this.messages = messages;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        View messageView;
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Change the layout based on who the message is from
+        if (messages.get(position).fromMe()) {
+
+            //TODO
+
+            messageView = inflater.inflate(R.layout.mymessage, parent, false);
+
+            TextView messageFromMe = (TextView) messageView.findViewById(R.id.mymessageTextView);
+            messageFromMe.setText(messages.get(position).getMessage());
+
+            TextView timeFromMe = (TextView) messageView.findViewById(R.id.mytimeTextView);
+            timeFromMe.setText(messages.get(position).getTime());
+
+        } else {
+
+            //TODO
+            messageView = inflater.inflate(R.layout.message, parent, false);
+
+            TextView messageFromClient = (TextView) messageView.findViewById(R.id.messageTextView);
+            messageFromClient.setText(messages.get(position).getMessage());
+
+            TextView timeFromClient = (TextView) messageView.findViewById(R.id.timeTextView);
+            timeFromClient.setText(messages.get(position).getTime());
+            
+        }
+
+        return messageView;
+    }
+}
